@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Deforestazione — Presentazione</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-scuro: #1a3a1f;
+    --verde-medio: #2d6a35;
+    --verde-chiaro: #4caf50;
+    --verde-neon: #76ff5a;
+    --marrone: #8b4513;
+    --crema: #f5f0e8;
+    --grigio-scuro: #111;
+    --arancio: #ff6b35;
+    --rosso: #c62828;
+    --testo-chiaro: #e8f5e9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--grigio-scuro);
+    color: var(--crema);
+    overflow-x: hidden;
+  }
+
+  /* ── NAVIGAZIONE ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,20,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(76,175,80,0.2);
+    padding: 14px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  nav .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--verde-neon); letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  nav ul { list-style: none; display: flex; gap: 28px; }
+  nav ul li a {
+    color: rgba(232,245,233,0.7); text-decoration: none;
+    font-size: 0.82rem; letter-spacing: 1px; text-transform: uppercase;
+    transition: color .2s;
+  }
+  nav ul li a:hover { color: var(--verde-neon); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(45,106,53,0.6) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(118,255,90,0.15) 0%, transparent 50%),
+      linear-gradient(135deg, #0a1a0a 0%, #1a3a1f 50%, #0e1a0e 100%);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 120px 80px 60px;
+    position: relative; overflow: hidden;
+  }
+  /* Pattern di alberi SVG decorativo */
+  .hero::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g fill='rgba(118,255,90,0.04)'><path d='M50 180 L50 130 M50 130 L30 90 L70 90 Z M50 100 L25 60 L75 60 Z M50 70 L30 35 L70 35 Z'/><path d='M150 180 L150 140 M150 140 L130 100 L170 100 Z M150 110 L130 75 L170 75 Z'/><path d='M100 180 L100 145 M100 145 L85 115 L115 115 Z M100 120 L85 90 L115 90 Z'/></g></svg>");
+    background-size: 300px;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+    background: linear-gradient(transparent, var(--grigio-scuro));
+    z-index: 2;
+  }
+  .hero > * { position: relative; z-index: 3; }
+  .hero-tag {
+    font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--verde-neon); margin-bottom: 20px;
+    border: 1px solid var(--verde-neon); padding: 6px 16px; display: inline-block;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.0; font-weight: 900;
+    max-width: 800px;
+  }
+  .hero h1 span { color: var(--verde-neon); }
+  .hero-sub {
+    margin-top: 24px; font-size: 1.2rem; font-weight: 300;
+    max-width: 560px; color: rgba(232,245,233,0.8); line-height: 1.6;
+  }
+  .hero-stat {
+    margin-top: 48px; display: flex; gap: 48px; flex-wrap: wrap;
+  }
+  .hs {
+    border-left: 3px solid var(--verde-neon); padding-left: 16px;
+  }
+  .hs .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 900; color: var(--verde-neon);
+  }
+  .hs .label { font-size: 0.8rem; color: rgba(232,245,233,0.65); letter-spacing: 1px; text-transform: uppercase; }
+
+  .scroll-hint {
+    position: absolute; bottom: 40px; left: 80px;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(232,245,233,0.4); display: flex; align-items: center; gap: 10px;
+  }
+  .scroll-hint::after {
+    content: ''; display: block; width: 40px; height: 1px;
+    background: rgba(232,245,233,0.3);
+  }
+
+  /* ── SEZIONI GENERALI ── */
+  section { padding: 100px 80px; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--verde-neon); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700;
+    margin-bottom: 48px; line-height: 1.2;
+  }
+  .section-title em { color: var(--verde-neon); font-style: normal; }
+
+  /* ── VISUAL DECORATIVI (sostituiscono le immagini) ── */
+  .visual-card {
+    border-radius: 6px; overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(76,175,80,0.2);
+  }
+  .visual-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    padding: 18px 24px;
+    font-size: 0.78rem; color: rgba(232,245,233,0.7); letter-spacing: 1px;
+  }
+
+  /* Visual 1: Confronto barre verticali (copertura forestale) */
+  .visual-copertura {
+    height: 280px; max-width: 700px;
+    background: linear-gradient(135deg, #0e2818 0%, #1a3a1f 100%);
+    display: flex; align-items: flex-end; justify-content: center;
+    gap: 60px; padding: 40px 40px 70px;
+  }
+  .bar-cmp { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .bar-cmp .vbar {
+    width: 80px; background: linear-gradient(to top, var(--verde-medio), var(--verde-neon));
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    box-shadow: 0 0 20px rgba(118,255,90,0.2);
+  }
+  .bar-cmp .vbar.shrunk { background: linear-gradient(to top, #5a3a1a, #8b4513); box-shadow: 0 0 20px rgba(139,69,19,0.2); }
+  .bar-cmp .vbar span {
+    position: absolute; top: -24px; left: 50%; transform: translateX(-50%);
+    font-family: 'Playfair Display',serif; color: var(--verde-neon); font-weight: 700; font-size: 1.1rem;
+  }
+  .bar-cmp .vbar.shrunk span { color: var(--arancio); }
+  .bar-cmp .vlabel { font-size: 0.75rem; letter-spacing: 1px; color: rgba(232,245,233,0.6); text-transform: uppercase; }
+
+  /* Visual 2: Confronto satellitare con SVG */
+  .visual-satellite {
+    max-width: 520px;
+    height: 200px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    background: #000;
+  }
+  .sat-side { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .sat-1970 { background:
+    radial-gradient(circle at 30% 40%, #2d6a35 0%, transparent 25%),
+    radial-gradient(circle at 70% 60%, #4caf50 0%, transparent 30%),
+    radial-gradient(circle at 50% 80%, #2d6a35 0%, transparent 25%),
+    radial-gradient(circle at 20% 70%, #4caf50 0%, transparent 20%),
+    radial-gradient(circle at 80% 30%, #2d6a35 0%, transparent 25%),
+    #1a3a1f;
+  }
+  .sat-2010 { background:
+    radial-gradient(circle at 30% 40%, #2d6a35 0%, transparent 12%),
+    radial-gradient(circle at 70% 60%, #4caf50 0%, transparent 10%),
+    linear-gradient(45deg, transparent 48%, #8b4513 49%, #8b4513 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, #8b4513 49%, #8b4513 51%, transparent 52%),
+    #5a3a1a;
+  }
+  .sat-label {
+    position: absolute; top: 8px; left: 8px;
+    font-size: 0.7rem; background: rgba(0,0,0,0.7); padding: 3px 8px;
+    color: var(--verde-neon); letter-spacing: 1px;
+  }
+  .sat-2010 .sat-label { color: var(--arancio); }
+
+  /* Visual 3: Strada che divide (SVG) */
+  .visual-strada {
+    height: 320px; position: relative;
+    background:
+      linear-gradient(to right, #1a3a1f 0%, #1a3a1f 48%, #3a2a1a 52%, #3a2a1a 100%);
+    overflow: hidden;
+  }
+  .visual-strada::before {
+    /* Strada diagonale */
+    content: '';
+    position: absolute; top: 0; bottom: 0; left: 47%; width: 6%;
+    background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  }
+  .visual-strada::after {
+    /* Linee tratteggiate stradali */
+    content: '';
+    position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
+    transform: translateX(-50%);
+    background: repeating-linear-gradient(to bottom, #ffd54f 0 20px, transparent 20px 40px);
+    opacity: 0.7;
+  }
+  .visual-strada .alberi-lato {
+    position: absolute; top: 0; bottom: 0; width: 47%;
+    background-image:
+      radial-gradient(circle at 20% 30%, #2d6a35 0, transparent 8%),
+      radial-gradient(circle at 50% 60%, #4caf50 0, transparent 7%),
+      radial-gradient(circle at 80% 25%, #2d6a35 0, transparent 8%),
+      radial-gradient(circle at 35% 80%, #4caf50 0, transparent 7%),
+      radial-gradient(circle at 70% 90%, #2d6a35 0, transparent 8%),
+      radial-gradient(circle at 10% 60%, #4caf50 0, transparent 6%),
+      radial-gradient(circle at 90% 70%, #2d6a35 0, transparent 7%);
+  }
+  .visual-strada .alberi-lato.sx { left: 0; }
+  .visual-strada .deforestato { position: absolute; top: 0; bottom: 0; right: 0; width: 47%;
+    background:
+      repeating-linear-gradient(45deg, #5a3a1a 0 4px, #3a2a1a 4px 8px),
+      #3a2a1a;
+  }
+
+  /* Visual 4: Disboscamento (alberi caduti SVG) */
+  .visual-disboscamento {
+    height: 200px;
+    background:
+      linear-gradient(to bottom, #3a2a1a 0%, #2a1a0a 100%);
+    position: relative; overflow: hidden;
+  }
+  .visual-disboscamento::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(75deg, transparent 40%, #8b4513 40%, #8b4513 44%, transparent 44%),
+      linear-gradient(110deg, transparent 60%, #6b3410 60%, #6b3410 63%, transparent 63%),
+      linear-gradient(60deg, transparent 70%, #8b4513 70%, #8b4513 73%, transparent 73%);
+    opacity: 0.7;
+  }
+  .visual-disboscamento::after {
+    content: '🪓';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-size: 4rem; opacity: 0.3;
+  }
+
+  /* Visual 5: Foresta bruciata */
+  .visual-bruciato {
+    height: 280px; position: relative; overflow: hidden;
+    background:
+      radial-gradient(ellipse at 30% 70%, #ff6b35 0%, transparent 40%),
+      radial-gradient(ellipse at 70% 80%, #c62828 0%, transparent 35%),
+      linear-gradient(to bottom, #1a0a05 0%, #3a1505 50%, #1a0a05 100%);
+  }
+  .visual-bruciato::before {
+    /* Silhouette di alberi bruciati */
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='none'><g fill='%23000' opacity='0.85'><rect x='20' y='40' width='4' height='160'/><rect x='60' y='60' width='3' height='140'/><rect x='90' y='20' width='5' height='180'/><rect x='130' y='50' width='4' height='150'/><rect x='170' y='30' width='3' height='170'/><rect x='200' y='70' width='4' height='130'/><rect x='240' y='40' width='5' height='160'/><rect x='280' y='55' width='3' height='145'/><rect x='320' y='25' width='4' height='175'/><rect x='360' y='45' width='4' height='155'/></g></svg>");
+    background-size: 100% 100%;
+  }
+  .visual-bruciato .quote-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(26,58,31,0.6), transparent 60%);
+    display: flex; align-items: center; padding: 60px;
+  }
+  .visual-bruciato .quote-overlay p {
+    font-size: 1.2rem; font-family:'Playfair Display',serif;
+    color: var(--crema); max-width: 480px; line-height: 1.5;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+
+  /* Visual 6: Vista aerea (pattern fattorie) */
+  .visual-aerea {
+    height: 260px;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 30px, rgba(0,0,0,0.1) 30px 31px),
+      repeating-linear-gradient(90deg, transparent 0 40px, rgba(0,0,0,0.1) 40px 41px),
+      linear-gradient(to right,
+        #1a3a1f 0%, #2d6a35 30%,
+        #4caf50 30%, #4caf50 32%,
+        #c4a266 35%, #c4a266 60%,
+        #8b6914 60%, #5a3a1a 100%);
+    position: relative;
+  }
+  .visual-aerea::before {
+    content: '';
+    position: absolute; top: 0; bottom: 0; left: 32%; width: 1px;
+    background: rgba(0,0,0,0.5);
+    box-shadow: 0 0 4px rgba(0,0,0,0.4);
+  }
+
+  /* Visual 7: Area disboscata (radura) */
+  .visual-radura {
+    height: 220px;
+    background:
+      radial-gradient(ellipse at center, #5a3a1a 0%, #3a2a1a 60%, #2a1a0a 100%);
+    position: relative; overflow: hidden;
+  }
+  .visual-radura::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 70%, #4a2a10 0, transparent 8%),
+      radial-gradient(circle at 35% 85%, #6b3410 0, transparent 6%),
+      radial-gradient(circle at 60% 75%, #4a2a10 0, transparent 7%),
+      radial-gradient(circle at 85% 80%, #6b3410 0, transparent 8%),
+      radial-gradient(circle at 25% 50%, #2d6a35 0, transparent 4%),
+      radial-gradient(circle at 75% 40%, #2d6a35 0, transparent 4%);
+  }
+
+  /* ── STATISTICHE ── */
+  #statistiche { background: var(--verde-scuro); }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2px; margin-top: 0;
+  }
+  .stat-card {
+    background: rgba(0,0,0,0.4); padding: 40px 32px;
+    border-bottom: 3px solid transparent; transition: border-color .3s;
+  }
+  .stat-card:hover { border-color: var(--verde-neon); }
+  .stat-card .big-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 900;
+    color: var(--verde-neon); line-height: 1;
+  }
+  .stat-card .unit { font-size: 1.1rem; color: rgba(232,245,233,0.5); }
+  .stat-card .desc { margin-top: 12px; font-size: 0.95rem; color: rgba(232,245,233,0.75); line-height: 1.5; }
+  .stat-card .fonte { margin-top: 8px; font-size: 0.7rem; color: rgba(232,245,233,0.35); letter-spacing: 1px; }
+
+  /* ── TIMELINE ── */
+  #cronologia { background: #0e1a0e; }
+  .timeline { position: relative; max-width: 860px; margin: 0 auto; }
+  .timeline::before {
+    content: ''; position: absolute; left: 20px; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--verde-neon), transparent);
+  }
+  .tl-item { padding: 0 0 52px 64px; position: relative; }
+  .tl-item::before {
+    content: ''; position: absolute; left: 12px; top: 6px;
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--verde-neon);
+    background: var(--grigio-scuro);
+  }
+  .tl-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--verde-neon); font-weight: 700; margin-bottom: 8px;
+  }
+  .tl-text { font-size: 0.95rem; color: rgba(232,245,233,0.8); line-height: 1.65; }
+  .tl-text strong { color: var(--crema); }
+
+  /* ── GEOGRAFIA ── */
+  #geografia { background: #12201a; }
+  .geo-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .geo-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(76,175,80,0.2);
+    border-radius: 4px; padding: 32px;
+    transition: transform .25s, border-color .25s;
+  }
+  .geo-card:hover { transform: translateY(-4px); border-color: var(--verde-neon); }
+  .geo-icon { font-size: 2.4rem; margin-bottom: 16px; }
+  .geo-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; margin-bottom: 12px; color: var(--crema);
+  }
+  .geo-card p { font-size: 0.9rem; color: rgba(232,245,233,0.7); line-height: 1.6; }
+  .geo-bar {
+    margin-top: 16px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;
+  }
+  .geo-bar-fill {
+    height: 100%; border-radius: 2px; background: var(--verde-neon);
+    transition: width 1s ease;
+  }
+  .geo-perc { font-size: 0.75rem; color: var(--verde-neon); margin-top: 6px; }
+
+  /* ── CAUSE ── */
+  #cause { background: var(--grigio-scuro); }
+  .cause-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .cause-list { display: flex; flex-direction: column; gap: 20px; }
+  .causa {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 24px; background: rgba(255,255,255,0.03);
+    border-left: 3px solid var(--arancio);
+  }
+  .causa .causa-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .causa h4 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; color: var(--crema); }
+  .causa p { font-size: 0.88rem; color: rgba(232,245,233,0.65); line-height: 1.55; }
+  .causa-chart { display: flex; flex-direction: column; gap: 16px; }
+  .bar-row { }
+  .bar-label { font-size: 0.8rem; color: rgba(232,245,233,0.6); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .bar-track { height: 12px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 2px; animation: growBar 1.5s ease forwards; }
+  @keyframes growBar { from { width: 0 !important; } }
+
+  /* ── IMPATTI ── */
+  #impatti { background: #150d0d; }
+  .impatti-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+  }
+  .impatto {
+    padding: 36px 28px;
+    border: 1px solid rgba(198,40,40,0.3);
+    border-radius: 4px;
+    position: relative; overflow: hidden;
+    transition: border-color .3s;
+  }
+  .impatto:hover { border-color: var(--rosso); }
+  .impatto::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--rosso);
+  }
+  .impatto-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900; color: var(--rosso);
+    line-height: 1;
+  }
+  .impatto h3 { font-size: 1rem; font-weight: 600; margin: 12px 0 10px; color: var(--crema); }
+  .impatto p { font-size: 0.88rem; color: rgba(232,245,233,0.65); line-height: 1.6; }
+
+  /* ── SOLUZIONI ── */
+  #soluzioni { background: #0a1a0a; }
+  .sol-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .sol-card {
+    background: rgba(76,175,80,0.08);
+    border: 1px solid rgba(76,175,80,0.25);
+    padding: 32px; border-radius: 4px;
+    transition: background .3s;
+  }
+  .sol-card:hover { background: rgba(76,175,80,0.15); }
+  .sol-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; color: var(--verde-neon); margin-bottom: 12px;
+  }
+  .sol-card p { font-size: 0.9rem; color: rgba(232,245,233,0.75); line-height: 1.6; }
+  .sol-card .sol-tipo {
+    display: inline-block; font-size: 0.7rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--verde-neon);
+    border: 1px solid var(--verde-neon); padding: 4px 10px; margin-bottom: 16px;
+  }
+
+  /* ── CITAZIONE ── */
+  .quote-block {
+    background: var(--verde-scuro); padding: 80px;
+    text-align: center; border-top: 1px solid rgba(76,175,80,0.2);
+    border-bottom: 1px solid rgba(76,175,80,0.2);
+  }
+  .quote-block blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    font-style: italic; line-height: 1.5; max-width: 900px; margin: 0 auto;
+    color: var(--crema);
+  }
+  .quote-block cite { display: block; margin-top: 24px; font-size: 0.85rem;
+    color: var(--verde-neon); font-style: normal; letter-spacing: 2px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050f05; padding: 48px 80px;
+    border-top: 1px solid rgba(76,175,80,0.15);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+  }
+  footer .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; color: var(--verde-neon);
+  }
+  footer .footer-info { font-size: 0.8rem; color: rgba(232,245,233,0.4); line-height: 1.6; }
+  footer .fonti { font-size: 0.75rem; color: rgba(232,245,233,0.3); max-width: 500px; line-height: 1.7; }
+
+  /* ── ANIMAZIONI ENTRATA ── */
+  .fade-in {
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+  @keyframes fadeUp { to { opacity: 1; transform: none; } }
+  .fade-in:nth-child(2) { animation-delay: .1s; }
+  .fade-in:nth-child(3) { animation-delay: .2s; }
+  .fade-in:nth-child(4) { animation-delay: .3s; }
+  .fade-in:nth-child(5) { animation-delay: .4s; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 768px) {
+    nav ul { display: none; }
+    section, .hero { padding: 80px 28px; }
+    .cause-layout { grid-template-columns: 1fr; }
+    footer { flex-direction: column; align-items: flex-start; padding: 40px 28px; }
+    .quote-block { padding: 48px 28px; }
+    .visual-bruciato .quote-overlay { padding: 28px; }
+    .visual-bruciato .quote-overlay p { font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGAZIONE -->
+<nav>
+  <div class="logo">🌿 Deforestazione</div>
+  <ul>
+    <li><a href="#statistiche">Dati</a></li>
+    <li><a href="#cronologia">Cronologia</a></li>
+    <li><a href="#geografia">Geografia</a></li>
+    <li><a href="#cause">Cause</a></li>
+    <li><a href="#impatti">Impatti</a></li>
+    <li><a href="#soluzioni">Soluzioni</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Presentazione · Classe 2025</div>
+  <h1>La <span>Deforestazione</span><br>Globale</h1>
+  <p class="hero-sub">
+    Ogni minuto scompaiono 18 campi da calcio di foresta primaria tropicale.
+    Il 2024 ha segnato il peggior anno mai registrato da quando si raccolgono dati.
+  </p>
+  <div class="hero-stat">
+    <div class="hs">
+      <div class="num">6,7 <span style="font-size:1.5rem">M</span></div>
+      <div class="label">ettari tropicali persi nel 2024</div>
+    </div>
+    <div class="hs">
+      <div class="num">30 <span style="font-size:1.5rem">M</span></div>
+      <div class="label">ettari totali persi nel 2024</div>
+    </div>
+    <div class="hs">
+      <div class="num">3,1 <span style="font-size:1.5rem">Gt</span></div>
+      <div class="label">CO₂ emessa dalla perdita forestale</div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scorri per approfondire</div>
+</section>
+
+<!-- STATISTICHE CHIAVE -->
+<section id="statistiche">
+  <p class="section-label">Dati aggiornati 2024 — WRI / Global Forest Watch</p>
+  <h2 class="section-title">I <em>Numeri</em> della Crisi</h2>
+  <div class="visual-card visual-copertura" style="margin-bottom:40px;">
+    <div class="bar-cmp">
+      <div class="vbar" style="height: 180px;"><span>100%</span></div>
+      <div class="vlabel">Copertura originale</div>
+    </div>
+    <div class="bar-cmp">
+      <div class="vbar shrunk" style="height: 54px;"><span>30%</span></div>
+      <div class="vlabel">Foresta odierna</div>
+    </div>
+    <div class="visual-caption">Copertura forestale originale vs. oggi — Fonte: Global Forest Watch</div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card fade-in">
+      <div class="big-num">30 <span class="unit">milioni</span></div>
+      <div class="desc">Ettari di foresta persi nel 2024 nel mondo. Una superficie equivalente all'intera Italia.</div>
+      <div class="fonte">Global Forest Watch / WRI, 2025</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="big-num">+80%</div>
+      <div class="desc">Incremento della perdita di foreste primarie tropicali nel 2024 rispetto al 2023.</div>
+      <div class="fonte">WRI Global Forest Review, 2025</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="big-num">48%</div>
+      <div class="desc">Quota della perdita forestale nel 2024 causata da incendi (nel 2002 era solo il 6%). Un aumento del 1.600% in 22 anni.</div>
+      <div class="fonte">Il Sole 24 Ore / InfoData, 2025</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="big-num">42%</div>
+      <div class="desc">Il Brasile da solo ha contribuito al 42% di tutta la perdita di foresta primaria tropicale del 2024.</div>
+      <div class="fonte">WRI, 2025</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="big-num">3,1 <span class="unit">Gt</span></div>
+      <div class="desc">Gigatonnellate di CO₂ emesse dalla sola perdita di foreste primarie tropicali nel 2024 — più delle emissioni annuali dell'India da fossili.</div>
+      <div class="fonte">WRI, 2025</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="big-num">30%</div>
+      <div class="desc">Le foreste coprono circa il 30% della superficie terrestre: circa 4 miliardi di ettari totali. Area tropicale: 45% delle foreste mondiali.</div>
+      <div class="fonte">Wikipedia / FAO</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="big-num">2,8 <span class="unit">M</span></div>
+      <div class="desc">Ettari persi in Brasile nel 2024 (record). Il 66% a causa degli incendi, il resto per agricoltura (soia e allevamento).</div>
+      <div class="fonte">Internazionale / WRI</div>
+    </div>
+    <div class="stat-card fade-in">
+      <div class="big-num">+200%</div>
+      <div class="desc">Incremento della perdita forestale in Bolivia nel 2024 rispetto all'anno precedente: 1,5 milioni di ettari distrutti.</div>
+      <div class="fonte">WRI, 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- CRONOLOGIA -->
+<section id="cronologia">
+  <p class="section-label">Storia della Deforestazione</p>
+  <h2 class="section-title">Una <em>Cronologia</em> millenaria</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">6300 a.C.</div>
+      <div class="tl-text">Già in questa data sono documentati fenomeni di deforestazione, ad esempio nell'insediamento di <strong>'Ain Ghazal</strong> (attuale Giordania).</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">10.000 anni fa</div>
+      <div class="tl-text">La maggior parte del suolo terrestre era ricoperta di foreste. L'aumento della popolazione portò <strong>5.000 anni fa</strong> ai primi fenomeni significativi di disboscamento agricolo.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Era Romana</div>
+      <div class="tl-text">Disboscamento intensivo per costruire navi e oggetti. <strong>Dal I secolo d.C.</strong> i romani erano già consapevoli della scarsità di cedri del Libano e istituirono un sistema di protezione: primo esempio noto di politica forestale.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">XIX secolo</div>
+      <div class="tl-text">In Francia la deforestazione aveva ridotto la copertura forestale al <strong>15%</strong> della superficie. La scoperta del carbone fossile fermò il processo. Negli USA, prima del 1800, quasi la metà del paese era coperta da foreste primarie.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1970–2002</div>
+      <div class="tl-text">Inizio della raccolta dati satellitari sistematica. Nel 2002 si registrano <strong>2,7 milioni di ettari</strong> di foreste tropicali distrutte. Di questi, solo 190.000 ha colpa degli incendi (il 6%).</div>
+      <div class="visual-card visual-satellite" style="margin-top:16px;">
+        <div class="sat-side sat-1970"><span class="sat-label">1970</span></div>
+        <div class="sat-side sat-2010"><span class="sat-label">2010</span></div>
+        <div class="visual-caption" style="grid-column: 1 / -1; position:absolute; bottom:0; left:0; right:0;">Confronto satellitare schematico — foresta densa (1970) vs. frammentata (2010)</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2016</div>
+      <div class="tl-text">Anno record (fino ad allora): la zona tropicale perde <strong>oltre 6 milioni di ettari</strong>. Sarà poi superato nel 2024.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2021 — Glasgow</div>
+      <div class="tl-text">Oltre <strong>140 capi di Stato</strong> firmano la Dichiarazione di Glasgow impegnandosi a fermare la perdita di foreste entro il 2030. Paradossalmente, da allora 17 dei 20 paesi con più foresta primaria hanno registrato perdite <em>maggiori</em>.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2023</div>
+      <div class="tl-text">Persi <strong>3,7 milioni di ettari</strong> di foresta tropicale primaria: equivalente a circa 10 campi da calcio al minuto. 2,4 Gt di CO₂ emessa.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2024 — Record storico</div>
+      <div class="tl-text"><strong>Peggior anno mai registrato</strong>: 6,7 milioni di ettari di foresta tropicale primaria distrutta, al ritmo di 18 campi da calcio al minuto. 30 milioni di ettari totali nel mondo (pari alla superficie italiana). Il fuoco supera per la prima volta l'agricoltura come causa principale (48%). Emissioni: 3,1 Gt di CO₂.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2025</div>
+      <div class="tl-text">La COP30 è in programma a <strong>Belém, nell'Amazzonia brasiliana</strong> (novembre 2025). Per fermare la perdita entro il 2030, il mondo dovrebbe ridurre la deforestazione del <strong>20% ogni anno</strong> da subito.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GEOGRAFIA -->
+<section id="geografia">
+  <p class="section-label">Mappa della Crisi</p>
+  <h2 class="section-title">Le <em>Regioni</em> più Colpite</h2>
+  <div class="visual-card visual-strada" style="margin-bottom:40px;">
+    <div class="alberi-lato sx"></div>
+    <div class="deforestato"></div>
+    <div class="visual-caption">Il confine invisibile: foresta primaria (a sinistra) e terreno disboscato (a destra), separati da una strada</div>
+  </div>
+  <div class="geo-grid">
+    <div class="geo-card">
+      <div class="geo-icon">🌿</div>
+      <h3>Amazzonia (Brasile)</h3>
+      <p>Il più grande bacino forestale del mondo. Il Brasile detiene il 42% di tutta la perdita di foresta primaria tropicale nel 2024: <strong>2,8 milioni di ettari</strong>. La siccità peggiore in 70 anni ha alimentato incendi fuori controllo. L'Amazzonia ha registrato la sua perdita più alta dal 2016.</p>
+      <div class="geo-bar"><div class="geo-bar-fill" style="width:95%"></div></div>
+      <div class="geo-perc">42% delle perdite tropicali globali</div>
+    </div>
+    <div class="geo-card">
+      <div class="geo-icon">🌍</div>
+      <h3>Bacino del Congo (Africa)</h3>
+      <p>Seconda foresta tropicale del pianeta. Nel 2024 ha registrato i livelli più alti di perdita da sempre. I conflitti armati, la povertà estrema e la dipendenza dal legname come fonte energetica si combinano in un mix devastante. La Colombia ha perso il 50% in più per estrazione illegale e coca.</p>
+      <div class="geo-bar"><div class="geo-bar-fill" style="width:75%"></div></div>
+      <div class="geo-perc">3° paese per perdita di foresta primaria 2024</div>
+    </div>
+    <div class="geo-card">
+      <div class="geo-icon">🦜</div>
+      <h3>Bolivia</h3>
+      <p>Nel 2024 ha scalato la classifica al <strong>2° posto</strong>, appena dopo il Brasile. Perdita di foresta primaria: <strong>+200% rispetto al 2023</strong>, per un totale di <strong>1,5 milioni di ettari</strong>. Quasi il 12% del paese è stato devastato dagli incendi. Le monocolture di soia, bestiame e canna da zucchero sono le cause principali.</p>
+      <div class="geo-bar"><div class="geo-bar-fill" style="width:85%"></div></div>
+      <div class="geo-perc">+200% perdita rispetto al 2023</div>
+    </div>
+    <div class="geo-card">
+      <div class="geo-icon">🌴</div>
+      <h3>Sud-Est Asiatico (Indonesia/Malesia)</h3>
+      <p>Unici segnali positivi nel 2024. <strong>Indonesia</strong>: riduzione della perdita di foreste primarie dell'<strong>11%</strong>, invertendo un trend negativo 2021-2023. <strong>Malesia</strong>: calo del <strong>13%</strong>, uscita per la prima volta dalla top 10. In Laos, invece, +47% di deforestazione nel 2023, spinta dall'espansione agricola verso Cina.</p>
+      <div class="geo-bar"><div class="geo-bar-fill" style="width:30%"></div></div>
+      <div class="geo-perc">Unica regione con trend migliorativo</div>
+    </div>
+    <div class="geo-card">
+      <div class="geo-icon">🧊</div>
+      <h3>Foreste Boreali (Canada/Russia)</h3>
+      <p>Nel 2024, per la <strong>prima volta</strong> nella storia dei dati GFW, si sono verificati incendi di grande portata sia nelle foreste tropicali <em>che</em> in quelle boreali contemporaneamente. Le intense stagioni degli incendi in Canada e Russia hanno contribuito al dato record mondiale.</p>
+      <div class="geo-bar"><div class="geo-bar-fill" style="width:60%"></div></div>
+      <div class="geo-perc">27% delle foreste mondiali — foreste boreali</div>
+    </div>
+    <div class="geo-card">
+      <div class="geo-icon">🌎</div>
+      <h3>Colombia</h3>
+      <p>La perdita forestale in Colombia è aumentata del <strong>50%</strong> nel 2024, causata principalmente dall'<strong>estrazione mineraria illegale</strong> e dalla produzione di coca. Le aree di foresta primaria convertite a uso illegale rappresentano una delle sfide politiche più difficili del continente.</p>
+      <div class="geo-bar"><div class="geo-bar-fill" style="width:65%"></div></div>
+      <div class="geo-perc">+50% perdita forestale nel 2024</div>
+    </div>
+  </div>
+</section>
+
+<!-- CAUSE -->
+<section id="cause">
+  <p class="section-label">Analisi delle Cause</p>
+  <h2 class="section-title">Perché <em>Accade</em>?</h2>
+  <div class="cause-layout">
+    <div class="cause-list">
+      <div class="causa">
+        <div class="causa-icon">🌾</div>
+        <div>
+          <h4>Agricoltura industriale</h4>
+          <p>Dal 2002 al 2024 è stata la causa principale della deforestazione: circa il <strong>60% degli ettari distrutti</strong>. Soia, olio di palma, bestiame, canna da zucchero, cotone, caffè e cacao sono le colture più impattanti. Le multinazionali agroindustriali espandono le monocolture abbattendo foreste primarie.</p>
+        </div>
+      </div>
+      <div class="causa">
+        <div class="causa-icon">🔥</div>
+        <div>
+          <h4>Incendi (dolosi e climatici)</h4>
+          <p>Nel 2024 è diventata la causa numero uno (48%). Spesso gli incendi nelle foreste tropicali sono di <strong>origine umana</strong>: si propagano da terreni appena disboscati per uso agricolo. Il riscaldamento globale e El Niño del 2024 li hanno resi incontrollabili.</p>
+        </div>
+      </div>
+      <div class="causa">
+        <div class="causa-icon">⛏️</div>
+        <div>
+          <h4>Estrazione mineraria illegale</h4>
+          <p>L'estrazione di oro, coltan e altri minerali distrugge foreste e contamina fiumi. In Colombia ha contribuito a un aumento del 50% della deforestazione nel 2024. Spesso si combina con la produzione di narcotici come la coca, in aree fuori dal controllo statale.</p>
+        </div>
+      </div>
+      <div class="causa">
+        <div class="causa-icon">🪵</div>
+        <div>
+          <h4>Taglio del legname (legale e illegale)</h4>
+          <p>Il taglio illegale fornisce materie prime a mercati globali senza controllo. Nel Bacino del Congo il legname viene usato come combustibile dalle popolazioni locali in assenza di alternative energetiche, creando un ciclo difficile da spezzare senza sviluppo economico.</p>
+        </div>
+      </div>
+      <div class="causa">
+        <div class="causa-icon">🏙️</div>
+        <div>
+          <h4>Urbanizzazione e infrastrutture</h4>
+          <p>La costruzione di strade, dighe, città e impianti industriali in aree forestali. Le strade aprono l'accesso a foreste prima inaccessibili, facilitando poi il disboscamento secondario. Le piste da sci in Europa sono un esempio locale minore ma emblematico.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="visual-card visual-disboscamento" style="margin-bottom:28px;">
+        <div class="visual-caption">Disboscamento meccanizzato in area tropicale</div>
+      </div>
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:28px; color: rgba(232,245,233,0.6);">Quota di responsabilità (serie storica 2002–2024)</h3>
+      <div class="causa-chart">
+        <div class="bar-row">
+          <div class="bar-label"><span>Agricoltura (permanente)</span><span style="color:var(--verde-neon)">60%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:60%; background:var(--arancio)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span>Agricoltura (itinerante)</span><span style="color:var(--verde-neon)">20%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:20%; background:var(--arancio)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span>Incendi</span><span style="color:var(--verde-neon)">13%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:13%; background:#ff9800"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span>Estrazione legname</span><span style="color:var(--verde-neon)">4%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:4%; background:#8d6e63"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span>Altro (infrastrutture, minerario…)</span><span style="color:var(--verde-neon)">3%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:3%; background:#607d8b"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:40px; padding: 24px; background: rgba(255,107,53,0.1); border-left: 3px solid var(--arancio);">
+        <p style="font-size:0.88rem; color:rgba(232,245,233,0.7); line-height:1.6">
+          <strong style="color:var(--arancio)">Solo nel 2024</strong>, la quota degli incendi è salita al 48%, superando l'agricoltura per la prima volta. Gli incendi in area tropicale non sono naturali: nascono quasi sempre da terreni disboscati che si propagano fuori controllo nelle foreste vicine.
+        </p>
+      </div>
+      <div style="margin-top:20px; padding: 24px; background: rgba(76,175,80,0.05); border-left: 3px solid var(--verde-neon);">
+        <p style="font-size:0.88rem; color:rgba(232,245,233,0.7); line-height:1.6">
+          <strong style="color:var(--verde-neon)">Metodo "taglia e brucia"</strong>: si abbattono gli alberi, poi si incendia il sottobosco. La cenere fertilizza brevemente il terreno. Dopo pochi anni il terreno è esaurito e si deve disboscare una nuova area, rendendo il processo ciclico e sempre più esteso.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CITAZIONE -->
+<div class="visual-bruciato">
+  <div class="quote-overlay">
+    <p>"Ogni anno le foreste bruciate dal fuoco equivalgono a 18 campi da calcio al minuto, per tutto il 2024."</p>
+  </div>
+</div>
+<div class="quote-block">
+  <blockquote>
+    «Le nostre economie, le nostre comunità, la nostra salute: niente di tutto questo può sopravvivere senza le foreste. Il 2024 è un allarme rosso globale, una chiamata collettiva all'azione per ogni Paese, ogni azienda e ogni persona che abbia a cuore un pianeta vivibile.»
+  </blockquote>
+  <cite>— Elizabeth Goldman, Co-Direttrice Global Forest Watch, World Resources Institute (WRI), 2025</cite>
+</div>
+
+<!-- IMPATTI -->
+<section id="impatti">
+  <p class="section-label">Conseguenze Globali</p>
+  <h2 class="section-title">Gli <em>Impatti</em> sulla Terra e sull'Uomo</h2>
+  <div class="visual-card visual-aerea" style="margin-bottom:40px;">
+    <div class="visual-caption">Vista aerea schematica: la linea netta tra foresta primaria e terra disboscata per l'agricoltura</div>
+  </div>
+  <div class="visual-card visual-radura" style="margin-bottom:48px;">
+    <div class="visual-caption">Foresta primaria rasa al suolo: non rimane nulla della biodiversità originale</div>
+  </div>
+  <div class="impatti-grid">
+    <div class="impatto">
+      <div class="impatto-num">3,1 Gt</div>
+      <h3>Emissioni di CO₂</h3>
+      <p>Solo la perdita di foreste primarie tropicali nel 2024 ha emesso 3,1 gigatonnellate di CO₂, equivalenti alle emissioni annuali da fossili dell'India. Le foreste tropicali sequestrano molto più carbonio di qualsiasi piantagione.</p>
+    </div>
+    <div class="impatto">
+      <div class="impatto-num">~80%</div>
+      <h3>Biodiversità terrestre</h3>
+      <p>Circa l'80% della biodiversità terrestre vive nelle foreste. Quando vengono bruciate o rase al suolo, si perdono innumerevoli specie in pochi anni, molte prima ancora di essere catalogate dalla scienza.</p>
+    </div>
+    <div class="impatto">
+      <div class="impatto-num">∞</div>
+      <h3>Ciclo dell'Acqua</h3>
+      <p>Le foreste regolano il ciclo idrologico. La loro distruzione altera le precipitazioni regionali, aggrava le siccità (come quella record in Brasile nel 2024: la peggiore in 70 anni) e aumenta i rischi di alluvioni e frane.</p>
+    </div>
+    <div class="impatto">
+      <div class="impatto-num">500M+</div>
+      <h3>Popolazioni indigene</h3>
+      <p>Oltre 500 milioni di persone nel mondo dipendono direttamente dalle foreste per il cibo, l'energia, i medicinali e la cultura. Le comunità indigene dell'Amazzonia, del Congo e del Borneo perdono le proprie terre ancestrali e i propri mezzi di sussistenza.</p>
+    </div>
+    <div class="impatto">
+      <div class="impatto-num">🦠</div>
+      <h3>Salute umana</h3>
+      <p>La deforestazione avvicina l'uomo a serbatoi animali di virus, aumentando il rischio di zoonosi e pandemie. Il Financial Times documenta come la perdita di foreste possa facilitare la propagazione di infezioni.</p>
+    </div>
+    <div class="impatto">
+      <div class="impatto-num">Erosione</div>
+      <h3>Degrado del suolo</h3>
+      <p>Il sistema "taglia e brucia" fertilizza il terreno solo per pochi anni. Senza copertura arborea, il suolo si erode rapidamente, diventa improduttivo e in alcuni casi si trasforma in savana o deserto. I processi erosivi accelerano con il cambiamento climatico.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUZIONI -->
+<section id="soluzioni">
+  <p class="section-label">Possibili Risposte</p>
+  <h2 class="section-title">Le <em>Soluzioni</em> Possibili</h2>
+  <div class="sol-grid">
+    <div class="sol-card">
+      <span class="sol-tipo">Politica internazionale</span>
+      <h3>Dichiarazione di Glasgow (2021)</h3>
+      <p>140 leader mondiali si sono impegnati a fermare la perdita di foreste entro il <strong>2030</strong>. Tuttavia il 2024 ha segnato un aumento dell'80%. La COP30 di Belém (novembre 2025) è la prossima occasione per rafforzare gli impegni.</p>
+    </div>
+    <div class="sol-card">
+      <span class="sol-tipo">Regolamentazione UE</span>
+      <h3>Regolamento UE sulla Deforestazione</h3>
+      <p>L'UE ha adottato una normativa che impone alle aziende di certificare che i prodotti importati (soia, olio di palma, carne, cacao, caffè, legno) non provengano da terreni deforestati dopo il 2020. Obiettivo: catene di approvvigionamento a <strong>deforestazione zero</strong>.</p>
+    </div>
+    <div class="sol-card">
+      <span class="sol-tipo">Certificazioni forestali</span>
+      <h3>FSC e PEFC</h3>
+      <p><strong>FSC</strong> (Forest Stewardship Council) e <strong>PEFC</strong> certificano la gestione sostenibile delle foreste. I prodotti certificati garantiscono che il legname provenga da foreste gestite responsabilmente, senza distruzione di habitat critici.</p>
+    </div>
+    <div class="sol-card">
+      <span class="sol-tipo">Tecnologia</span>
+      <h3>Monitoraggio satellitare e IA</h3>
+      <p>Il <strong>Global Forest Watch</strong> (WRI/Università del Maryland) usa dati satellitari per rilevare la perdita forestale in tempo quasi reale. Algoritmi di machine learning identificano il disboscamento illegale e prevedono i rischi. I droni possono piantare fino a 2.000 alberi per ettaro.</p>
+    </div>
+    <div class="sol-card">
+      <span class="sol-tipo">Prevenzione incendi</span>
+      <h3>Sistemi di allerta precoce</h3>
+      <p>Il WRI raccomanda investimenti urgenti in: sistemi di allerta precoce, attrezzature di pronto intervento, formazione di pompieri locali e pratiche agricole sostenibili per ridurre il rischio che incendi agricoli si propaghino alle foreste.</p>
+    </div>
+    <div class="sol-card">
+      <span class="sol-tipo">Popolazioni indigene</span>
+      <h3>Protezione dei diritti territoriali</h3>
+      <p>Le aree forestali gestite da popolazioni indigene mostrano tassi di deforestazione molto più bassi. Riconoscere legalmente i diritti territoriali degli indigeni è una delle strategie più efficaci e meno costose per preservare le foreste.</p>
+    </div>
+    <div class="sol-card">
+      <span class="sol-tipo">Consumatori</span>
+      <h3>Scelte consapevoli quotidiane</h3>
+      <p>Ridurre il consumo di carne bovina, preferire prodotti certificati FSC/Rainforest Alliance, limitare il consumo di olio di palma non certificato, ridurre lo spreco alimentare. Come dice Ilaria Beretta (Università Cattolica): <em>"Le scelte che compiamo quotidianamente hanno un impatto importante sulla salute degli alberi."</em></p>
+    </div>
+    <div class="sol-card">
+      <span class="sol-tipo">Indonesia: caso di successo</span>
+      <h3>Esempio concreto di inversione</h3>
+      <p>L'Indonesia ha ridotto la perdita di foreste primarie dell'<strong>11%</strong> nel 2024, invertendo un trend negativo. Merito di politiche di ripristino dei terreni degradati, limitazione degli incendi e moratoria sulle concessioni in aree forestali critiche.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">🌿 La Deforestazione Globale</div>
+    <div class="footer-info" style="margin-top:8px">Presentazione per la classe · 2025</div>
+  </div>
+  <div class="fonti">
+    <strong style="color:rgba(232,245,233,0.5)">Fonti principali:</strong><br>
+    World Resources Institute (wri.org) · Global Forest Watch (globalforestwatch.org) · 
+    Wikipedia IT "Diboscamento" · Internazionale.it · Il Sole 24 Ore InfoData · 
+    Vatican News · Rinnovabili.it · WWF Italia · 
+    Università del Maryland / GLAD Lab · Elizabeth Goldman &amp; Peter Potapov (WRI, 2025)
+  </div>
+</footer>
+
+<script>
+  // Animazione barre al scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.bar-fill').forEach(b => {
+          const w = b.style.width;
+          b.style.width = '0';
+          setTimeout(() => { b.style.width = w; }, 100);
+        });
+        e.target.querySelectorAll('.geo-bar-fill').forEach(b => {
+          const w = b.style.width;
+          b.style.width = '0';
+          setTimeout(() => { b.style.transition = 'width 1.2s ease'; b.style.width = w; }, 200);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('#cause, #geografia').forEach(s => observer.observe(s));
+
+  // Highlight nav link attivo
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav ul li a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(l => {
+      l.style.color = l.getAttribute('href') === `#${current}` 
+        ? 'var(--verde-neon)' : 'rgba(232,245,233,0.7)';
+    });
+  });
+</script>
+</body>
+</html>
